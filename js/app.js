@@ -8,10 +8,26 @@ function Quiz() {
     var userAnswers = [];
     var answerSelected = false; // or do it like a function which return bool
 
+    var startBtn = document.getElementById('start');
+    var restartBtn = document.getElementById('restart');
+    var nextQuestion = document.getElementById('nextQuestion');
+    var prevQuestion = document.getElementById('prevQuestion');
+
     //-------------Public functions--------------------
 
     this.startQuiz = function () {
-        console.log(JSON.stringify(questions, null, 2));
+        alert('Start quiz!');
+    };
+
+    this.showWelcome = function () {
+        //show the start button
+    };
+
+    this.setListeners = function () {
+        startBtn.addEventListener('click', () => this.startQuiz());
+        restartBtn.addEventListener('click', () => this.restartQuiz());
+        nextQuestion.addEventListener('click', () => this.nextQuestion());
+        prevQuestion.addEventListener('click', () => this.previousQuestion());
     };
 
     this.init = function () {
@@ -20,11 +36,14 @@ function Quiz() {
                 throw err;
             }
             questions = data;
-            this.startQuiz();
+            console.log(JSON.stringify(questions, null, 2)); //TODO: debug
+            this.setListeners();
+            this.showWelcome();
         }).bind(this));
     };
 
     this.nextQuestion = function () {
+        alert('Next question!');
         //check if answer is selected -> else return
         //save users's answer
         //check if the answer is right and set user's points
@@ -34,6 +53,7 @@ function Quiz() {
     };
 
     this.previousQuestion = function () {
+        alert('Previous question!');
         //get user's answer by question number
         //
     };
@@ -44,6 +64,7 @@ function Quiz() {
     };
 
     this.restartQuiz = function () {
+        alert('Restart quiz!');
         // TODO:
     };
 
@@ -64,12 +85,11 @@ function Quiz() {
                 var data = JSON.parse(request.responseText);
                 callback(null, data);
             } else {
-                // We reached our target server, but it returned an error
+                // Server reached, but it returned an error
             }
         };
 
         request.onerror = function() {
-            // There was a connection error of some sort
             callback('Connection error', null);
         };
 
