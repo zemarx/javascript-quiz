@@ -1,3 +1,3 @@
 # javascript-quiz
 
-Simple quiz written in vanilla javascript
+Simple quiz application written in vanilla javascript
