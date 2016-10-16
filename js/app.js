@@ -1,5 +1,13 @@
 function Quiz() {
 
+    //initially -> hide 'prevQ', 'nextQ', all radios. show 'start'
+
+    //'start' -> generate 10 questions, hide 'start', 'restart'. show 'prevQ', 'nextQ', show first question
+
+    //''
+
+
+
     //------------Private variables-------------------
 
     var questions = []; //arr of objects
@@ -13,14 +21,34 @@ function Quiz() {
     var nextQuestion = document.getElementById('nextQuestion');
     var prevQuestion = document.getElementById('prevQuestion');
 
+    var questionDiv = document.getElementById('question-wrap');
+    var radios = document.getElementsByName('choices');
+
+    var questionText = document.getElementById('questionText');
+    var choice1 = document.getElementById('q1text');
+    var choice2 = document.getElementById('q2text');
+    var choice3 = document.getElementById('q3text');
+
     //-------------Public functions--------------------
 
     this.startQuiz = function () {
-        alert('Start quiz!');
+        //alert('Start quiz!');
+        questionDiv.style.display = '';
+        nextQuestion.style.display = '';
+        prevQuestion.style.display = '';
+        startBtn.style.display = 'none';
+
+        currentQuestion = 1;
+
+        setCurrentQuestion();
     };
 
     this.showWelcome = function () {
         //show the start button
+        restartBtn.style.display = 'none';
+        nextQuestion.style.display = 'none';
+        prevQuestion.style.display = 'none';
+        questionDiv.style.display = 'none';
     };
 
     this.setListeners = function () {
@@ -71,9 +99,25 @@ function Quiz() {
     //--------------Private functions------------------
 
     function setCurrentQuestion () {
-        //clear radio buttons
-        //get question from somewhere by "currentQuestion"
-        //set choices
+        clearAllRadios();
+
+        var current = questions[currentQuestion - 1];
+
+        questionText.innerText = current.question;
+        choice1.innerText = current.choices[0];
+        choice2.innerText = current.choices[1];
+        choice3.innerText = current.choices[2];
+    };
+
+    function clearAllRadios() {
+        for (var i = 0, length = radios.length; i < length; i++) {
+            radios[i].checked = false;
+        }
+    };
+
+    function setRadio (radioNum) {
+        clearAllRadios();
+        radios[radioNum].checked = true;
     };
 
     function getData(method, url, callback) {
@@ -99,6 +143,8 @@ function Quiz() {
 
 var quiz = new Quiz();
 
-quiz.init();
+
+
+quiz.init(); //make windows on load if necessary
 
 //set listeners to buttons
