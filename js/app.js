@@ -75,9 +75,12 @@ function Quiz() {
         //check if answer is selected -> else return
         //save users's answer
         //check if the answer is right and set user's points
+
+
+        currentQuestion += 1;
         setCurrentQuestion();
 
-        currentQuestion++;
+        //currentQuestion++;
     };
 
     this.previousQuestion = function () {
