@@ -4,17 +4,16 @@ function Quiz() {
 
     //'start' -> generate 10 questions, hide 'start', 'restart'. show 'prevQ', 'nextQ', show first question
 
-    //''
+    //'next question' -> check if question is selected, save answer in glob arr, check if answer is right and add points
 
 
 
     //------------Private variables-------------------
 
-    var questions = []; //arr of objects
+    var questions = []; // all the questions
     var currentQuestion = 0;
     var points = 0;
     var userAnswers = [];
-    var answerSelected = false; // or do it like a function which return bool
 
     var startBtn = document.getElementById('start');
     var restartBtn = document.getElementById('restart');
@@ -71,14 +70,19 @@ function Quiz() {
     };
 
     this.nextQuestion = function () {
-        //check if answer is selected -> else return
-        //save users's answer
         //check if the answer is right and set user's points
+
+        if (!isAnswerSelected()) {
+            alert("Please selected an answer");
+            return;
+        }
 
         if (currentQuestion === questions.length) {
             return;
         }
 
+
+        setUserAnswer();
         currentQuestion += 1;
         setCurrentQuestion();
     };
@@ -89,6 +93,7 @@ function Quiz() {
         if (currentQuestion === 1) {
             return;
         }
+
         currentQuestion -= 1;
         setCurrentQuestion();
     };
@@ -117,7 +122,16 @@ function Quiz() {
         choice3.innerText = current.choices[2];
     };
 
-    function clearAllRadios() {
+    function isAnswerSelected () {
+        for (var i = 0, length = radios.length; i < length; i++) {
+            if (radios[i].checked === true) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    function clearAllRadios () {
         for (var i = 0, length = radios.length; i < length; i++) {
             radios[i].checked = false;
         }
@@ -127,6 +141,20 @@ function Quiz() {
         clearAllRadios();
         radios[radioNum].checked = true;
     };
+
+    function getSelectedAnswer () {
+        for (var i = 0, length = radios.length; i < length; i++) {
+            if (radios[i].checked === true) {
+                return i;
+            }
+        }
+        return -1;
+    };
+
+    function setUserAnswer () {
+        userAnswers[currentQuestion] = getSelectedAnswer(); 
+        console.log(userAnswers); //TODO: DEBUG
+    }
 
     function getData(method, url, callback) {
         var request = new XMLHttpRequest();
