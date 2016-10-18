@@ -15,6 +15,10 @@ function Quiz() {
     var points = 0;
     var userAnswers = [];
 
+    var mainSection = document.getElementById('main-wrap');
+
+    var resultText = document.getElementById('resultText');
+
     var startBtn = document.getElementById('start');
     var restartBtn = document.getElementById('restart');
     var nextQuestion = document.getElementById('nextQuestion');
@@ -43,7 +47,8 @@ function Quiz() {
     };
 
     this.showWelcome = function () {
-        //show the start button
+        startBtn.style.display = '';
+        resultText.style.display = 'none';
         restartBtn.style.display = 'none';
         nextQuestion.style.display = 'none';
         prevQuestion.style.display = 'none';
@@ -78,7 +83,18 @@ function Quiz() {
         }
 
         if (currentQuestion === questions.length) {
+            //get last answer
+            setUserAnswer();
+            //show the user his points
+            questionDiv.style.display = 'none';
+            nextQuestion.style.display = 'none';
+            prevQuestion.style.display = 'none';
+            restartBtn.style.display = '';
+            //show restart button, hide all other buttons
+            resultText.innerText = "You have got X points"
+            resultText.style.display = "";
             return;
+
         }
 
 
@@ -105,8 +121,8 @@ function Quiz() {
     };
 
     this.restartQuiz = function () {
-        alert('Restart quiz!');
-        // TODO:
+        this.showWelcome();
+        // TODO: CLEAR ALL THE USER'S ANSWERS AND POINTS
     };
 
     //--------------Private functions------------------
