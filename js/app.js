@@ -64,30 +64,35 @@ function Quiz() {
                 throw err;
             }
             questions = data;
-            console.log(JSON.stringify(questions, null, 2)); //TODO: debug
+            //console.log(JSON.stringify(questions, null, 2)); //TODO: debug
             this.setListeners();
             this.showWelcome();
         }).bind(this));
     };
 
     this.nextQuestion = function () {
-        alert('Next question!');
         //check if answer is selected -> else return
         //save users's answer
         //check if the answer is right and set user's points
 
+        if (currentQuestion === questions.length) {
+            return;
+        }
 
         currentQuestion += 1;
         setCurrentQuestion();
-
-        //currentQuestion++;
     };
 
     this.previousQuestion = function () {
-        alert('Previous question!');
         //get user's answer by question number
-        //
+
+        if (currentQuestion === 1) {
+            return;
+        }
+        currentQuestion -= 1;
+        setCurrentQuestion();
     };
+
 
     this.initQuiz = function (data) {
         currentQuestion = 0;
