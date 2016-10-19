@@ -41,8 +41,7 @@ function Quiz() {
         prevQuestion.style.display = '';
         startBtn.style.display = 'none';
 
-        currentQuestion = 1;
-
+        this.initQuiz();
         setCurrentQuestion();
     };
 
@@ -75,23 +74,23 @@ function Quiz() {
     };
 
     this.nextQuestion = function () {
-        //check if the answer is right and set user's points
-
         if (!isAnswerSelected()) {
             alert("Please selected an answer");
             return;
         }
 
+
         if (currentQuestion === questions.length) {
             //get last answer
             setUserAnswer();
+            checkUserAnswers();
             //show the user his points
             questionDiv.style.display = 'none';
             nextQuestion.style.display = 'none';
             prevQuestion.style.display = 'none';
             restartBtn.style.display = '';
             //show restart button, hide all other buttons
-            resultText.innerText = "You have got X points"
+            resultText.innerText = 'You have got ' + points + ' points';
             resultText.style.display = "";
             return;
 
@@ -116,7 +115,7 @@ function Quiz() {
 
 
     this.initQuiz = function (data) {
-        currentQuestion = 0;
+        currentQuestion = 1;
         points = 0;
     };
 
@@ -126,6 +125,17 @@ function Quiz() {
     };
 
     //--------------Private functions------------------
+    
+    function checkUserAnswers () {
+       for (var i = 0, length = questions.length; i < length; i++) {
+            console.log('User answer at index: ' + i + ' is: ' + userAnswers[i + 1]);
+            console.log('Right answer at index: ' + i + ' is: ' + questions[i].answer);
+            if (userAnswers[i + 1] === questions[i].answer) {
+                points++;
+            }
+       }
+       console.log(points);
+    };
 
     function setCurrentQuestion () {
         clearAllRadios();
