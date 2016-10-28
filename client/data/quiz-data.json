@@ -1,0 +1,32 @@
+[
+    {
+        "question": "What is 5*5 ?",
+        "choices": ["25", "23", "0"],
+        "correctAnswer": 0
+    },
+    {
+        "question": "Best basketball player?",
+        "choices": ["Kobe", "Jordan", "Magic"],
+        "correctAnswer": 2
+    },
+    {
+        "question": "Speed of light?",
+        "choices": ["300000 km/h", "100000 km/h", "800000 km/h"],
+        "correctAnswer": 0
+    },
+    {
+        "question": "What does 'Merhaba' mean in turkish?",
+        "choices": ["Do you have any cookies?", "What is the time?", "Hellooo"],
+        "correctAnswer": 2
+    },
+    {
+        "question": "Real name of Iron Man?",
+        "choices": ["Barry Allen", "Bruce Wayne", "Tony Stark"],
+        "correctAnswer": 2
+    },
+    {
+        "question": "What is my favorite superhero?",
+        "choices": ["Aquaman", "Spider-man", "Flash"],
+        "correctAnswer": 1
+    }
+]
