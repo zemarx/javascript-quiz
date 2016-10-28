@@ -4,20 +4,17 @@ function Quiz() {
 
     //'start' -> generate 10 questions, hide 'start', 'restart'. show 'prevQ', 'nextQ', show first question
 
-    //'next question' -> check if question is selected, save answer in glob arr, check if answer is right and add points
+    //''
 
 
 
     //------------Private variables-------------------
 
-    var questions = []; // all the questions
+    var questions = []; //arr of objects
     var currentQuestion = 0;
     var points = 0;
     var userAnswers = [];
-
-    var mainSection = document.getElementById('main-wrap');
-
-    var resultText = document.getElementById('resultText');
+    var answerSelected = false; // or do it like a function which return bool
 
     var startBtn = document.getElementById('start');
     var restartBtn = document.getElementById('restart');
@@ -41,13 +38,13 @@ function Quiz() {
         prevQuestion.style.display = '';
         startBtn.style.display = 'none';
 
-        this.initQuiz();
+        currentQuestion = 1;
+
         setCurrentQuestion();
     };
 
     this.showWelcome = function () {
-        startBtn.style.display = '';
-        resultText.style.display = 'none';
+        //show the start button
         restartBtn.style.display = 'none';
         nextQuestion.style.display = 'none';
         prevQuestion.style.display = 'none';
@@ -67,75 +64,42 @@ function Quiz() {
                 throw err;
             }
             questions = data;
-            //console.log(JSON.stringify(questions, null, 2)); //TODO: debug
+            console.log(JSON.stringify(questions, null, 2)); //TODO: debug
             this.setListeners();
             this.showWelcome();
         }).bind(this));
     };
 
     this.nextQuestion = function () {
-        if (!isAnswerSelected()) {
-            alert("Please selected an answer");
-            return;
-        }
+        alert('Next question!');
+        //check if answer is selected -> else return
+        //save users's answer
+        //check if the answer is right and set user's points
 
 
-        if (currentQuestion === questions.length) {
-            //get last answer
-            setUserAnswer();
-            checkUserAnswers();
-            //show the user his points
-            questionDiv.style.display = 'none';
-            nextQuestion.style.display = 'none';
-            prevQuestion.style.display = 'none';
-            restartBtn.style.display = '';
-            //show restart button, hide all other buttons
-            resultText.innerText = 'You have got ' + points + ' points';
-            resultText.style.display = "";
-            return;
-
-        }
-
-
-        setUserAnswer();
         currentQuestion += 1;
         setCurrentQuestion();
+
+        //currentQuestion++;
     };
 
     this.previousQuestion = function () {
+        alert('Previous question!');
         //get user's answer by question number
-
-        if (currentQuestion === 1) {
-            return;
-        }
-
-        currentQuestion -= 1;
-        setCurrentQuestion();
+        //
     };
 
-
     this.initQuiz = function (data) {
-        currentQuestion = 1;
+        currentQuestion = 0;
         points = 0;
     };
 
     this.restartQuiz = function () {
-        this.showWelcome();
-        // TODO: CLEAR ALL THE USER'S ANSWERS AND POINTS
+        alert('Restart quiz!');
+        // TODO:
     };
 
     //--------------Private functions------------------
-    
-    function checkUserAnswers () {
-       for (var i = 0, length = questions.length; i < length; i++) {
-            console.log('User answer at index: ' + i + ' is: ' + userAnswers[i + 1]);
-            console.log('Right answer at index: ' + i + ' is: ' + questions[i].answer);
-            if (userAnswers[i + 1] === questions[i].answer) {
-                points++;
-            }
-       }
-       console.log(points);
-    };
 
     function setCurrentQuestion () {
         clearAllRadios();
@@ -148,16 +112,7 @@ function Quiz() {
         choice3.innerText = current.choices[2];
     };
 
-    function isAnswerSelected () {
-        for (var i = 0, length = radios.length; i < length; i++) {
-            if (radios[i].checked === true) {
-                return true;
-            }
-        }
-        return false;
-    };
-
-    function clearAllRadios () {
+    function clearAllRadios() {
         for (var i = 0, length = radios.length; i < length; i++) {
             radios[i].checked = false;
         }
@@ -167,20 +122,6 @@ function Quiz() {
         clearAllRadios();
         radios[radioNum].checked = true;
     };
-
-    function getSelectedAnswer () {
-        for (var i = 0, length = radios.length; i < length; i++) {
-            if (radios[i].checked === true) {
-                return i;
-            }
-        }
-        return -1;
-    };
-
-    function setUserAnswer () {
-        userAnswers[currentQuestion] = getSelectedAnswer(); 
-        console.log(userAnswers); //TODO: DEBUG
-    }
 
     function getData(method, url, callback) {
         var request = new XMLHttpRequest();
